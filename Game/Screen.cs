@@ -5,6 +5,22 @@ namespace Game
 {
     class Screen      // Class containing screen related functions
     {
+        public void CenterText(string text)
+        {
+            for (int i = 0; i < 53 - (text.Length / 2); i++)
+            {
+                Console.Write(" ");
+            }
+            Console.Write(text);
+        }
+        public void PrintDottedLine()
+        {
+            for (int i = 0; i < 106; i++)
+            {
+                Console.Write("-");
+            }
+            Console.WriteLine("\n");
+        }
         public void PrintIdle()
         {
             string sourcePath = @"d:\CSharp Game Project\Game\Sprites\Idle.txt";
@@ -24,31 +40,14 @@ namespace Game
                 Console.WriteLine(e.Message);
             }
         }
-        public void PrintWelcome()
+        public void PrintWelcome()         // Just for testing
         {
-            for (int i = 0; i < 106; i++)
-            {
-                Console.Write("-");
-            }
-            
-            Console.WriteLine("\n");
-            
-            for (int i = 0; i < 35; i++)
-            {
-                Console.Write(" ");
-            }
-            Console.Write("WELCOME TO THE FIRST GAME PROJECT!!!\n\n");
+            PrintDottedLine();
 
-            for (int i = 0; i < 29; i++)
-            {
-                Console.Write(" ");
-            }
-            Console.Write("GOOD LUCK, WINDOWSCRASHED!!! (you'll need it...)\n\n");
+            CenterText("WELCOME TO THE FIRST GAME PROJECT!!!\n\n");
+            CenterText("GOOD LUCK, WINDOWSCRASHED!!!(you'll need it...)\n\n");
 
-            for (int i = 0; i < 106; i++)
-            {
-                Console.Write("-");
-            }
+            PrintDottedLine();
         }
     }
 }
