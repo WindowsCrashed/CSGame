@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
+using Game.Characters;
 
 namespace Game
 {
     class Screen      // Class containing screen related functions
     {
-        public void CenterText(string text)
+        public void CenterText(string text)     // Used for centering messages
         {
             for (int i = 0; i < 53 - (text.Length / 2); i++)
             {
@@ -13,7 +14,10 @@ namespace Game
             }
             Console.Write(text);
         }
-        public void PrintDottedLine()
+        
+        // ---------- PRINTING FUNCTIONS -------------
+        
+        public void DottedLine()      // Prints those lines
         {
             for (int i = 0; i < 106; i++)
             {
@@ -21,7 +25,7 @@ namespace Game
             }
             Console.WriteLine("\n");
         }
-        public void PrintIdle()
+        public void Idle()        // Prints the standard position of the characters
         {
             string sourcePath = @"d:\CSharp Game Project\Game\Sprites\Idle.txt";
 
@@ -40,14 +44,23 @@ namespace Game
                 Console.WriteLine(e.Message);
             }
         }
-        public void PrintWelcome()         // Just for testing
+        public void Welcome()       // Just for testing
         {
-            PrintDottedLine();
+            DottedLine();
 
             CenterText("WELCOME TO THE FIRST GAME PROJECT!!!\n\n");
             CenterText("GOOD LUCK, WINDOWSCRASHED!!!(you'll need it...)\n\n");
 
-            PrintDottedLine();
+            DottedLine();
+        }
+        public void Encounter(BlackKnight bk)     // Prints the encounter message and decisions 
+        {
+            DottedLine();
+            CenterText($"A {bk.Name.ToUpper()} STEPS INTO YOUR PATH!!!\n\n");
+            DottedLine();
+
+            CenterText("What are you going to do?\n\n");
+            CenterText("[1] FIGHT    [2] TURN BACK\n\n");
         }
     }
 }

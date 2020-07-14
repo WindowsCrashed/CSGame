@@ -1,4 +1,7 @@
-﻿namespace Game
+﻿using Game.Characters;
+using System;
+
+namespace Game
 {
     class MainProgram
     {
@@ -8,8 +11,9 @@
 
             Screen sc = new Screen();
 
-            sc.PrintIdle();
-            sc.PrintWelcome();
+            sc.Idle();
+            sc.Encounter(new BlackKnight());
+            Console.ReadLine();
         }
     }
 }
