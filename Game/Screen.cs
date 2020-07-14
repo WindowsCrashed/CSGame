@@ -62,5 +62,35 @@ namespace Game
             CenterText("What are you going to do?\n\n");
             CenterText("[1] FIGHT    [2] TURN BACK\n\n");
         }
+        public void PrepareFight()      // Prints the first option's message
+        {
+            DottedLine();
+            CenterText("Taking the sword and preparing to fight!\n\n");
+            DottedLine();
+        }
+        public void Flee()     // Prints the exit message
+        {
+            DottedLine();
+            CenterText("Turning back and seeking another path...\n\n");
+            DottedLine();
+        }
+        public void PlayerTurn()     // Prints the main UI
+        {
+            Idle();
+            DottedLine();
+            CenterText("What is going to be your next move?\n\n");
+            DottedLine();
+            CenterText("[1] ATTACK    [2] DEFEND\n");
+            CenterText("[3] INVENTORY    [4] FLEE\n\n");
+        }
+        public void PlayerAttack(Player p)     // Prints the Attack Choice UI
+        {
+            Idle();
+            DottedLine();
+            CenterText("Which attack are you going to use?\n\n");
+            DottedLine();
+            CenterText($"[1] {p.MoveSet[0]}    [2] {p.MoveSet[1]}\n");
+            CenterText($"[3] {p.MoveSet[2]}    [4] {p.MoveSet[3]}\n\n");
+        }
     }
 }
