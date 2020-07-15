@@ -1,20 +1,22 @@
-﻿namespace Game.Characters
-{
-    class Player         // Class to store player data
-    {
-        public string[] MoveSet { get; private set; } = new string[4];
+﻿using Game.GameLogic;
 
+namespace Game.Characters
+{
+    class Player : Character       // Class to store player data
+    {
         public Player()
         {
+            Name = "Player";     // For now
+            Hp = 10;
             CreateMoveSet();
         }
 
-        public void CreateMoveSet()
+        public void CreateMoveSet()     // Just for testing
         {
-            MoveSet[0] = "Downward Strike";
-            MoveSet[1] = "Upward Strike";
-            MoveSet[2] = "Thrust";
-            MoveSet[3] = "PRAISE THE SUN";
+            MoveSet.Add(new Attack("Downward Strike", 3));
+            MoveSet.Add(new Attack("Upward Strike", 3));
+            MoveSet.Add(new Attack("Thrust", 5));
+            MoveSet.Add(new Attack("PRAISE THE SUN", 1000));
         }
     }
 }

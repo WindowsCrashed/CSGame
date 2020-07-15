@@ -1,5 +1,6 @@
 ﻿using Game.Characters;
 using System;
+using System.Threading;
 
 namespace Game.GameLogic
 {
@@ -7,8 +8,9 @@ namespace Game.GameLogic
     {
         Screen screen = new Screen();
         Player player = new Player();
+        BlackKnight enemy = new BlackKnight();   // Change later to include multiple enemies
 
-        public bool Turn()
+        public bool Turn()          // Manages player turns
         {
             Console.Clear();
 
@@ -36,7 +38,30 @@ namespace Game.GameLogic
         public void Attack()        // Function to manage attacks
         {
             screen.PlayerAttack(new Player());
-            Console.ReadLine();
+            int choice = int.Parse(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    MakeAttack(0);
+                    break;
+                case 2:
+                    MakeAttack(1);
+                    break;
+                case 3:
+                    MakeAttack(2);
+                    break;                    
+                case 4:
+                    MakeAttack(3);
+                    break;
+            }
+        }
+        public void MakeAttack(int pos)     // Calculates damage (and does other things)
+        {
+            enemy.Hp -= player.MoveSet[pos].Damage;
+
+            Console.Clear();
+            screen.Damage(player, pos);
+            Thread.Sleep(3000);
         }
     }
 }

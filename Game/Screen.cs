@@ -89,8 +89,14 @@ namespace Game
             DottedLine();
             CenterText("Which attack are you going to use?\n\n");
             DottedLine();
-            CenterText($"[1] {p.MoveSet[0]}    [2] {p.MoveSet[1]}\n");
-            CenterText($"[3] {p.MoveSet[2]}    [4] {p.MoveSet[3]}\n\n");
+            CenterText($"[1] {p.MoveSet[0].Name}    [2] {p.MoveSet[1].Name}\n");
+            CenterText($"[3] {p.MoveSet[2].Name}    [4] {p.MoveSet[3].Name}\n\n");
+        }
+        public void Damage(Character c, int pos)
+        {
+            DottedLine();
+            CenterText($"{c.MoveSet[pos].Damage} DAMAGE!!!\n\n");
+            DottedLine();
         }
     }
 }

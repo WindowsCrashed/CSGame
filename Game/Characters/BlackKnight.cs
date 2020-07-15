@@ -1,9 +1,11 @@
 ﻿namespace Game.Characters
 {
-    class BlackKnight           // Class to store enemy data
+    class BlackKnight : Character           // Class to store enemy data
     {
-        public string Name { get; private set; } = "Black Knight";
-
-        public BlackKnight() { }
+        public BlackKnight()
+        {
+            Name = "Black Knight";
+            Hp = 10;
+        }
     }
 }

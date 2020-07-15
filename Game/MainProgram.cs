@@ -14,8 +14,13 @@ namespace Game
             Screen sc = new Screen();
             PlayerTurn pt = new PlayerTurn();
 
+            //Player p = new Player();
+
             sc.Idle();
             sc.Encounter(new BlackKnight());
+
+            //Console.WriteLine(p.MoveSet[0].Name);
+
             int choice = int.Parse(Console.ReadLine());
 
             Console.Clear();
@@ -28,7 +33,7 @@ namespace Game
                     sc.Flee();
                     break;
             }
-            Thread.Sleep(5000);
+            Thread.Sleep(4000);
 
             Console.Clear();
             pt.Turn();
