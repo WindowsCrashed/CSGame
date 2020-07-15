@@ -27,7 +27,7 @@ namespace Game.GameLogic
             {
                 Console.Clear();
 
-                Screen.PlayerTurn();      // Prints the main UI
+                Screen.PlayerTurn(Player, Enemy);      // Prints the main UI
 
                 try
                 {
@@ -70,7 +70,7 @@ namespace Game.GameLogic
             {
                 Console.Clear();
 
-                Screen.PlayerAttack(new Player());
+                Screen.PlayerAttack(Player, Enemy);
                 
                 try
                 {

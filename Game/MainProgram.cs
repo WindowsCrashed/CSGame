@@ -10,9 +10,9 @@ namespace Game
         static void Main(string[] args)       // Change to Main2() when testing
         {
             // ----------- INITIALIZATION -------------
-
-            Match m = new Match();
+            
             Screen s = new Screen();
+            Match m = new Match(s);
             Player p = new Player();
             BlackKnight bk = new BlackKnight();
             PlayerTurn pt = new PlayerTurn(m, s, p, bk);
@@ -38,6 +38,7 @@ namespace Game
                         case 1:
                             Console.Clear();
                             s.PrepareFight();
+                            Thread.Sleep(4000);
                             break;
                         case 2:
                             Console.Clear();
@@ -58,19 +59,27 @@ namespace Game
                 }
             }
 
-            Thread.Sleep(4000);
-
 
             // ---------------- TURNS -------------------
 
-            while (startingChoice == 1)   // Turns loop until a character dies or flees
+            while (startingChoice == 1)
             {
+                // ----- Checks if the player has stopped the game -----
                 if (!m.MatchInProgress)
                 {
                     break;
                 }
 
+
+                // ----- Turns -----
+
                 pt.Turn();
+
+
+                // ----- Checks if any of the health bars are empty -----
+
+                m.Victory(bk);
+                m.Defeat(p);
             }
         }
     }
