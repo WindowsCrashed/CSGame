@@ -53,10 +53,10 @@ namespace Game
 
             DottedLine();
         }
-        public void Encounter(BlackKnight bk)     // Prints the encounter message and decisions 
+        public void Encounter(Character e)     // Prints the encounter message and decisions 
         {
             DottedLine();
-            CenterText($"A {bk.Name.ToUpper()} STEPS INTO YOUR PATH!!!\n\n");
+            CenterText($"A {e.Name.ToUpper()} STEPS INTO YOUR PATH!!!\n\n");
             DottedLine();
 
             CenterText("What are you going to do?\n\n");
@@ -92,7 +92,7 @@ namespace Game
             CenterText($"[1] {p.MoveSet[0].Name}    [2] {p.MoveSet[1].Name}\n");
             CenterText($"[3] {p.MoveSet[2].Name}    [4] {p.MoveSet[3].Name}\n\n");
         }
-        public void Damage(Character c, int pos)
+        public void Damage(Character c, int pos)    // Prints damage screen
         {
             DottedLine();
             CenterText($"{c.MoveSet[pos].Damage} DAMAGE!!!\n\n");
