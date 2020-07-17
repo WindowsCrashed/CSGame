@@ -1,4 +1,5 @@
 ﻿using Game.Characters;
+using Game.Exceptions;
 using System;
 using System.Threading;
 
@@ -6,17 +7,19 @@ namespace Game.GameLogic
 {
     class PlayerTurn         // Class to manage the player's turn logic
     {
-        public Match Match { get; set; }
-        public Screen Screen { get; set; }
-        public Player Player { get; set; }
-        public Character Enemy { get; set; }
+        private Match _match; 
+        private Screen _screen;
+        private Player _player;
+        private Character _enemy;
+        private CombatException _exception;
         
-        public PlayerTurn(Match match, Screen screen, Player player, Character enemy)
+        public PlayerTurn(Match match, Screen screen, Player player, Character enemy, CombatException exception)
         {
-            Match = match;
-            Screen = screen;
-            Player = player;
-            Enemy = enemy;
+            _match = match;
+            _screen = screen;
+            _player = player;
+            _enemy = enemy;
+            _exception = exception;
         }
 
         public void Turn()          // Manages player turns
@@ -27,7 +30,7 @@ namespace Game.GameLogic
             {
                 Console.Clear();
 
-                Screen.PlayerTurn(Player, Enemy);      // Prints the main UI
+                _screen.PlayerTurn(_player, _enemy);      // Prints the main UI
 
                 try
                 {
@@ -48,17 +51,13 @@ namespace Game.GameLogic
                             Flee();
                             break;            
                         default:
-                            Screen.CenterText("INVALID CHOICE\n");
-                            Screen.CenterText("Try again");
-                            Thread.Sleep(2000);
+                            _exception.InvalidChoice();
                             break;
                     }
                 }
                 catch
                 {
-                    Screen.CenterText("INVALID CHOICE\n");
-                    Screen.CenterText("Try again");
-                    Thread.Sleep(2000);
+                    _exception.InvalidChoice();
                 }
             }
         }
@@ -70,7 +69,7 @@ namespace Game.GameLogic
             {
                 Console.Clear();
 
-                Screen.PlayerAttack(Player, Enemy);
+                _screen.PlayerAttack(_player, _enemy);
                 
                 try
                 {
@@ -91,26 +90,22 @@ namespace Game.GameLogic
                             MakeAttack(3);
                             break;
                         default:
-                            Screen.CenterText("INVALID CHOICE\n");
-                            Screen.CenterText("Try again");
-                            Thread.Sleep(2000);
+                            _exception.InvalidChoice();
                             break;
                     }
                 }
                 catch
                 {
-                    Screen.CenterText("INVALID CHOICE\n");
-                    Screen.CenterText("Try again");
-                    Thread.Sleep(2000);
+                    _exception.InvalidChoice();
                 }
             }
         }
         public void MakeAttack(int pos)     // Calculates damage (and does other things)
         {
-            Enemy.Hp -= Player.MoveSet[pos].Damage;
+            _enemy.ReduceHP(_player, pos);
 
             Console.Clear();
-            Screen.Damage(Player, pos);
+            _screen.Damage(_player, pos);
             Thread.Sleep(3000);
         }
         public void Defend() { }
@@ -118,8 +113,8 @@ namespace Game.GameLogic
         public void Flee()   // Function to end game
         {
             Console.Clear();
-            Screen.Flee();
-            Match.EndMatch();
+            _screen.Flee();
+            _match.EndMatch();
         }
     }
 }

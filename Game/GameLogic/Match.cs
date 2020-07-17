@@ -6,11 +6,11 @@ namespace Game.GameLogic
     class Match         // Manages match related logic (for now just the end)
     {
         public bool MatchInProgress { get; private set; }
-        public Screen Screen { get; set; }
+        private Screen _screen;
 
         public Match(Screen screen)
         {
-            Screen = screen;
+            _screen = screen;
             MatchInProgress = true;
         }
 
@@ -23,7 +23,7 @@ namespace Game.GameLogic
             if (enemy.Hp <= 0)
             {
                 Console.Clear();
-                Screen.Victory();
+                _screen.Victory();
                 EndMatch();
             }
         }
@@ -32,7 +32,7 @@ namespace Game.GameLogic
             if (player.Hp <= 0)
             {
                 Console.Clear();
-                Screen.Defeat();
+                _screen.Defeat();
                 EndMatch();
             }
         }

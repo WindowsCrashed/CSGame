@@ -4,9 +4,9 @@ namespace Game.GameLogic
 {
     class Attack
     {
-        public string Name { get; set; }
-        public int Damage { get; set; }
-        public Animation Animation { get; set; }
+        public string Name { get; private set; }
+        public int Damage { get; private set; }
+        public Animation Animation { get; private set; }
 
         public Attack(string name, int damage /*Animation animation*/)
         {

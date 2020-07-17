@@ -1,5 +1,6 @@
 ﻿using Game.Characters;
 using Game.GameLogic;
+using Game.Exceptions;
 using System;
 using System.Threading;
 
@@ -12,10 +13,11 @@ namespace Game
             // ----------- INITIALIZATION -------------
             
             Screen s = new Screen();
+            CombatException e = new CombatException(s);
             Match m = new Match(s);
             Player p = new Player();
             BlackKnight bk = new BlackKnight();
-            PlayerTurn pt = new PlayerTurn(m, s, p, bk);
+            PlayerTurn pt = new PlayerTurn(m, s, p, bk, e);
 
             
             // ------------ FIRST CHOICE --------------
@@ -45,17 +47,13 @@ namespace Game
                             s.Flee();
                             break;
                         default:
-                            s.CenterText("INVALID CHOICE\n");
-                            s.CenterText("Try again");
-                            Thread.Sleep(2000);
+                            e.InvalidChoice();
                             break;
                     }
                 }
                 catch
                 {
-                    s.CenterText("INVALID CHOICE\n");
-                    s.CenterText("Try again");
-                    Thread.Sleep(2000);
+                    e.InvalidChoice();
                 }
             }
 
