@@ -7,7 +7,7 @@ namespace Game.ForTesting
     {
         public void Test1()
         {
-            string sourcePath = @"d:\CSharp Game Project\Game\Sprites\DefaultPose.txt";
+            string sourcePath = @"..\..\..\..\Sprites\DefaultPose(For testing).txt";
 
             try
             {
