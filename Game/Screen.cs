@@ -1,11 +1,19 @@
 ﻿using System;
 using System.IO;
 using Game.Characters;
+using Game.Miscellaneous;
 
 namespace Game
 {
     class Screen      // Class containing screen related functions
     {
+        // ------------- VARIABLES -------------------
+
+        private Directories _directories = new Directories();
+
+
+        // ---------- LOGIC FUNCTIONS ----------------
+
         public void CenterText(string text)     // Used for centering messages
         {
             for (int i = 0; i < 53 - (text.Length / 2); i++)
@@ -44,11 +52,9 @@ namespace Game
         }
         public void Idle()        // Prints the standard position of the characters
         {
-            string sourcePath = @"d:\CSharp Game Project\Game\Sprites\Idle.txt";
-
             try
             {
-                string[] lines = File.ReadAllLines(sourcePath);
+                string[] lines = File.ReadAllLines(_directories.GetSpritePath("Idle"));
 
                 foreach (string line in lines)
                 {
