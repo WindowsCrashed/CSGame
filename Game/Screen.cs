@@ -44,7 +44,7 @@ namespace Game
         }
         public void Idle()        // Prints the standard position of the characters
         {
-            string sourcePath = @"d:\CSharp Game Project\Game\Sprites\Idle.txt";
+            string sourcePath = @"..\..\..\..\Sprites\Idle.txt"; //Might not work when exporting the game -> different folder structure
 
             try
             {
