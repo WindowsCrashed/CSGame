@@ -111,6 +111,22 @@ namespace Game
             CenterText($"[1] {player.MoveSet[0].Name}    [2] {player.MoveSet[1].Name}\n");
             CenterText($"[3] {player.MoveSet[2].Name}    [4] {player.MoveSet[3].Name}\n\n");
         }
+        public void EnemyTurn(Player player, Character opponent)   // Prints the Enemy Turn UI
+        {
+            Idle();
+            HealthBar(player, opponent);
+            DottedLine();
+            CenterText($"The {opponent.Name} is preparing to move...\n\n");
+            DottedLine();
+        }
+        public void EnemyAttack(Player player, Character opponent, int pos)   // Prints the Enemy Attack UI
+        {
+            Idle();
+            HealthBar(player, opponent);
+            DottedLine();
+            CenterText($"{opponent.MoveSet[pos].Name.ToUpper()} INCOMING!!!\n\n");
+            DottedLine();
+        }
         public void Damage(Character c, int pos)    // Prints damage screen
         {
             DottedLine();

@@ -18,6 +18,7 @@ namespace Game
             Player p = new Player();
             BlackKnight bk = new BlackKnight();
             PlayerTurn pt = new PlayerTurn(m, s, p, bk, e);
+            EnemyTurn et = new EnemyTurn(m, s, bk, p);
 
             
             // ------------ FIRST CHOICE --------------
@@ -60,24 +61,15 @@ namespace Game
 
             // ---------------- TURNS -------------------
 
-            while (startingChoice == 1)
+            while (startingChoice == 1 && m.MatchInProgress)
             {
-                // ----- Checks if the player has stopped the game -----
-                if (!m.MatchInProgress)
-                {
-                    break;
-                }
-
-
-                // ----- Turns -----
+                // ----- Player Turn -----
 
                 pt.Turn();
 
+                // ----- Enemy Turn -----
 
-                // ----- Checks if any of the health bars are empty -----
-
-                m.Victory(bk);
-                m.Defeat(p);
+                et.Turn();
             }
         }
     }

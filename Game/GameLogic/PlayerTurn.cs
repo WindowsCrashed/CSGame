@@ -24,40 +24,45 @@ namespace Game.GameLogic
 
         public void Turn()          // Manages player turns
         {
-            int choice = 0;
-
-            while (choice != 1 && choice != 2 && choice != 3 && choice != 4)   // Locks the player until he/she chooses a valid option
+            if (_match.MatchInProgress)   // If the match is not in progress, doesn't start turn
             {
-                Console.Clear();
+                int choice = 0;
 
-                _screen.PlayerTurn(_player, _enemy);      // Prints the main UI
-
-                try
+                while (choice != 1 && choice != 2 && choice != 3 && choice != 4)   // Locks the player until he/she chooses a valid option
                 {
-                    choice = int.Parse(Console.ReadLine());
+                    Console.Clear();
 
-                    switch (choice)     // Choose action
+                    _screen.PlayerTurn(_player, _enemy);      // Prints the main UI
+
+                    try
                     {
-                        case 1:
-                            Attack();
-                            break;
-                        case 2:
-                            Defend();
-                            break;
-                        case 3:
-                            Inventory();
-                            break;
-                        case 4:
-                            Flee();
-                            break;            
-                        default:
-                            _exception.InvalidChoice();
-                            break;
+                        choice = int.Parse(Console.ReadLine());
+
+                        switch (choice)     // Choose action
+                        {
+                            case 1:
+                                Attack();
+                                break;
+                            case 2:
+                                Defend();
+                                break;
+                            case 3:
+                                Inventory();
+                                break;
+                            case 4:
+                                Flee();
+                                break;
+                            default:
+                                _exception.InvalidChoice();
+                                break;
+                        }
+
+                        _match.Victory(_enemy);   // Checks if enemy's health bar is empty
                     }
-                }
-                catch
-                {
-                    _exception.InvalidChoice();
+                    catch
+                    {
+                        _exception.InvalidChoice();
+                    }
                 }
             }
         }
@@ -100,7 +105,7 @@ namespace Game.GameLogic
                 }
             }
         }
-        public void MakeAttack(int pos)     // Calculates damage (and does other things)
+        public void MakeAttack(int pos)     // Calculates damage and displays UI
         {
             _enemy.ReduceHP(_player, pos);
 
@@ -108,8 +113,8 @@ namespace Game.GameLogic
             _screen.Damage(_player, pos);
             Thread.Sleep(3000);
         }
-        public void Defend() { }
-        public void Inventory() { }
+        public void Defend() { }   // Empty for now
+        public void Inventory() { }  // Empty for now
         public void Flee()   // Function to end game
         {
             Console.Clear();
