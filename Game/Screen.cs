@@ -7,9 +7,15 @@ namespace Game
 {
     class Screen      // Class containing screen related functions
     {
-        // ------------- VARIABLES -------------------
-
         private Directories _directories = new Directories();
+        private Character _opponent;
+        private Player _player;
+
+        public Screen(Character opponent, Player player)
+        {
+            _opponent = opponent;
+            _player = player;
+        }
 
 
         // ---------- LOGIC FUNCTIONS ----------------
@@ -76,10 +82,10 @@ namespace Game
 
             DottedLine();
         }
-        public void Encounter(Character e)     // Prints the encounter message and decisions 
+        public void Encounter()     // Prints the encounter message and decisions 
         {
             DottedLine();
-            CenterText($"A {e.Name.ToUpper()} STEPS INTO YOUR PATH!!!\n\n");
+            CenterText($"A {_opponent.Name.ToUpper()} STEPS INTO YOUR PATH!!!\n\n");
             DottedLine();
 
             CenterText("What are you going to do?\n\n");
@@ -97,40 +103,40 @@ namespace Game
             CenterText("Turning back and seeking another path...\n\n");
             DottedLine();
         }
-        public void PlayerTurn(Player player, Character opponent)     // Prints the main UI
+        public void PlayerTurn()     // Prints the main UI
         {
             Idle();
-            HealthBar(player, opponent);
+            HealthBar();
             DottedLine();
             CenterText("What is going to be your next move?\n\n");
             DottedLine();
             CenterText("[1] ATTACK    [2] DEFEND\n");
             CenterText("[3] INVENTORY    [4] FLEE\n\n");
         }
-        public void PlayerAttack(Player player, Character opponent)     // Prints the Attack Choice UI
+        public void PlayerAttack()     // Prints the Attack Choice UI
         {
             Idle();
-            HealthBar(player, opponent);
+            HealthBar();
             DottedLine();
             CenterText("Which attack are you going to use?\n\n");
             DottedLine();
-            CenterText($"[1] {player.MoveSet[0].Name}    [2] {player.MoveSet[1].Name}\n");
-            CenterText($"[3] {player.MoveSet[2].Name}    [4] {player.MoveSet[3].Name}\n\n");
+            CenterText($"[1] {_player.MoveSet[0].Name}    [2] {_player.MoveSet[1].Name}\n");
+            CenterText($"[3] {_player.MoveSet[2].Name}    [4] {_player.MoveSet[3].Name}\n\n");
         }
-        public void EnemyTurn(Player player, Character opponent)   // Prints the Enemy Turn UI
+        public void EnemyTurn()   // Prints the Enemy Turn UI
         {
             Idle();
-            HealthBar(player, opponent);
+            HealthBar();
             DottedLine();
-            CenterText($"The {opponent.Name} is preparing to move...\n\n");
+            CenterText($"The {_opponent.Name} is preparing to move...\n\n");
             DottedLine();
         }
-        public void EnemyAttack(Player player, Character opponent, int pos)   // Prints the Enemy Attack UI
+        public void EnemyAttack(int pos)   // Prints the Enemy Attack UI
         {
             Idle();
-            HealthBar(player, opponent);
+            HealthBar();
             DottedLine();
-            CenterText($"{opponent.MoveSet[pos].Name.ToUpper()} INCOMING!!!\n\n");
+            CenterText($"{_opponent.MoveSet[pos].Name.ToUpper()} INCOMING!!!\n\n");
             DottedLine();
         }
         public void Damage(Character c, int pos)    // Prints damage screen
@@ -139,7 +145,31 @@ namespace Game
             CenterText($"{c.MoveSet[pos].Damage} DAMAGE!!!\n\n");
             DottedLine();
         }
-        public void HealthBar(Player player, Character opponent)   // Prints the health bars of player and opponent
+        public void PlayerDefence()     // Prints Player Shield Status
+        {
+            Idle();
+            HealthBar();
+            DottedLine();
+            CenterText("Shield raised!!!\n\n");
+            DottedLine();
+        }
+        public void EnemyDefence()     // Prints Enemy Shield Status
+        {
+            Idle();
+            HealthBar();
+            DottedLine();
+            CenterText($"The {_opponent.Name} raised his shield!!!\n\n");
+            DottedLine();
+        }
+        public void BlockAttack()    // Prints block message
+        {
+            Idle();
+            HealthBar();
+            DottedLine();
+            CenterText("ATTACK BLOCKED!!!\n\n");
+            DottedLine();
+        }
+        public void HealthBar()   // Prints the health bars of player and opponent
         {
             Console.WriteLine();
 
@@ -148,14 +178,14 @@ namespace Game
                 Console.Write(" ");
             }
 
-            HealthBarLogic(player);
+            HealthBarLogic(_player);
 
             for (int i = 0; i < 36; i++)
             {
                 Console.Write(" ");
             }
 
-            HealthBarLogic(opponent);
+            HealthBarLogic(_opponent);
 
             Console.WriteLine("\n");
         }

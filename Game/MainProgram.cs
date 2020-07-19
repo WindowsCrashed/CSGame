@@ -11,12 +11,12 @@ namespace Game
         static void Main(string[] args)       // Change to Main2() when testing
         {
             // ----------- INITIALIZATION -------------
-            
-            Screen s = new Screen();
-            CombatException e = new CombatException(s);
-            Match m = new Match(s);
+
             Player p = new Player();
             BlackKnight bk = new BlackKnight();
+            Screen s = new Screen(bk, p);
+            CombatException e = new CombatException(s);
+            Match m = new Match(s);
             PlayerTurn pt = new PlayerTurn(m, s, p, bk, e);
             EnemyTurn et = new EnemyTurn(m, s, bk, p);
 
@@ -30,7 +30,7 @@ namespace Game
                 Console.Clear();
 
                 s.Idle();   // Change sprite later
-                s.Encounter(new BlackKnight());     // Make it possible to fight other opponents latar
+                s.Encounter();     // Make it possible to fight other opponents later
 
                 try
                 {

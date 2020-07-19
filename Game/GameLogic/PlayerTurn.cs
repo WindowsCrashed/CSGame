@@ -26,13 +26,15 @@ namespace Game.GameLogic
         {
             if (_match.MatchInProgress)   // If the match is not in progress, doesn't start turn
             {
+                _player.LowerShield();   // Lowers player shield at the beginning of the turn
+
                 int choice = 0;
 
                 while (choice != 1 && choice != 2 && choice != 3 && choice != 4)   // Locks the player until he/she chooses a valid option
                 {
                     Console.Clear();
 
-                    _screen.PlayerTurn(_player, _enemy);      // Prints the main UI
+                    _screen.PlayerTurn();      // Prints the main UI
 
                     try
                     {
@@ -74,7 +76,7 @@ namespace Game.GameLogic
             {
                 Console.Clear();
 
-                _screen.PlayerAttack(_player, _enemy);
+                _screen.PlayerAttack();
                 
                 try
                 {
@@ -107,13 +109,28 @@ namespace Game.GameLogic
         }
         public void MakeAttack(int pos)     // Calculates damage and displays UI
         {
-            _enemy.ReduceHP(_player, pos);
-
             Console.Clear();
-            _screen.Damage(_player, pos);
+
+            if (_enemy.ShieldUp)        // Only deals damage if enemy's shield is lowered
+            {
+                _screen.BlockAttack();
+                _enemy.LowerShield();
+            } else
+            {
+                _enemy.ReduceHP(_player, pos);
+                _screen.Damage(_player, pos);
+            }
+            
             Thread.Sleep(3000);
         }
-        public void Defend() { }   // Empty for now
+        public void Defend()      // Cancels enemy damage
+        {
+            _player.RaiseShield();
+
+            Console.Clear();
+            _screen.PlayerDefence();
+            Thread.Sleep(3000);
+        }   
         public void Inventory() { }  // Empty for now
         public void Flee()   // Function to end game
         {

@@ -16,7 +16,7 @@ namespace Game.Characters
             MoveSet.Add(new Attack("Downward Strike", 3));
             MoveSet.Add(new Attack("Upward Strike", 3));
             MoveSet.Add(new Attack("Thrust", 5));
-            MoveSet.Add(new Attack("ULTIMATE USELESS ATTACK", 0));
+            MoveSet.Add(new Attack("ULTIMATE NOT OVERPOWERED ATTACK", 9999));
         }
     }
 }

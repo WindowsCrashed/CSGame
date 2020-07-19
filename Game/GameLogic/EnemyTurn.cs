@@ -25,10 +25,12 @@ namespace Game.GameLogic
         {
             if (_match.MatchInProgress)        // If the match is not in progress, doesn't start turn
             {
+                _enemy.LowerShield();  // Lowers enemy shield at the beginning of the turn
+
                 int choice = _random.Next(1, 3);       // Most Basic AI
 
                 Console.Clear();
-                _screen.EnemyTurn(_player, _enemy);
+                _screen.EnemyTurn();
                 Thread.Sleep(3000);
 
                 switch (choice)
@@ -67,15 +69,30 @@ namespace Game.GameLogic
         public void MakeAttack(int pos)    // Calculates damage and displays the UI
         {
             Console.Clear();
-            _screen.EnemyAttack(_player, _enemy, pos);
+            _screen.EnemyAttack(pos);
             Thread.Sleep(3000);
-
-            _player.ReduceHP(_enemy, pos);
 
             Console.Clear();
-            _screen.Damage(_enemy, pos);
+            
+            if (_player.ShieldUp)      // Only deals damage if player's shield is lowered
+            {
+                _screen.BlockAttack();
+                _player.LowerShield();
+            } else
+            {
+                _player.ReduceHP(_enemy, pos);
+                _screen.Damage(_enemy, pos);
+            }
+
             Thread.Sleep(3000);
         }
-        public void Defend() { }   // Empty for now
+        public void Defend()   // Raises enemy shield
+        {
+            _enemy.RaiseShield();
+
+            Console.Clear();
+            _screen.EnemyDefence();
+            Thread.Sleep(3000);
+        }
     }
 }
