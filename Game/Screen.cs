@@ -74,6 +74,23 @@ namespace Game
                 Console.WriteLine(e.Message);
             }
         }
+        public void EncounterPose() // Prints the enemy standing in player's path
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(_directories.GetSpritePath("Encounter"));
+
+                foreach (string line in lines)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("ERROR 404");
+                Console.WriteLine(e.Message);
+            }
+        }
         public void Encounter()     // Prints the encounter message and decisions 
         {
             DottedLine();

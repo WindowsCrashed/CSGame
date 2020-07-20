@@ -30,7 +30,7 @@ namespace Game
             {
                 Console.Clear();
 
-                s.Idle();   // Change sprite later
+                s.EncounterPose();   // Make different sprites for different enemies later
                 s.Encounter();     // Make it possible to fight other opponents later
 
                 try
