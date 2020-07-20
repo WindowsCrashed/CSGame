@@ -12,7 +12,7 @@ namespace Game.GameLogic
         private Player _player;
         private Random _random;
 
-        public EnemyTurn(Match match, Screen screen, Character enemy, Player player)
+        public EnemyTurn(Match match, Screen screen, Player player, Character enemy)
         {
             _match = match;
             _screen = screen;

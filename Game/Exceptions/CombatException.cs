@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 namespace Game.Exceptions
 {
@@ -13,8 +14,27 @@ namespace Game.Exceptions
 
         public void InvalidChoice()
         {
+            Console.Clear();
+
+            _screen.Idle();
+            _screen.HealthBar();
+            _screen.DottedLine();
             _screen.CenterText("INVALID CHOICE\n");
-            _screen.CenterText("Try again");
+            _screen.CenterText("Try again\n\n");
+            _screen.DottedLine();
+
+            Thread.Sleep(2000);
+        }
+        public void NoItemFound()
+        {
+            Console.Clear();
+
+            _screen.Idle();
+            _screen.HealthBar();
+            _screen.DottedLine();
+            _screen.CenterText($"NO ITEM IN THIS SLOT\n\n");
+            _screen.DottedLine();
+
             Thread.Sleep(2000);
         }
     }

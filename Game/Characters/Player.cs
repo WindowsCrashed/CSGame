@@ -6,8 +6,9 @@ namespace Game.Characters
     {
         public Player()
         {
-            Name = "Player";     // For now
+            Name = "You";     // For now
             Hp = 10;
+            MaxHp = 10;
             CreateMoveSet();
         }
 

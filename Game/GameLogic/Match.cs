@@ -14,6 +14,14 @@ namespace Game.GameLogic
             MatchInProgress = true;
         }
 
+        public void SetUpFight(Player player, Character opponent)     // Used for solving problems related to Screen
+        {  
+            player.SetOpponent(opponent);   // Not useful for now
+            opponent.SetOpponent(player);   // Not useful for now
+            player.SetScreen(_screen);
+            opponent.SetScreen(_screen);
+            player.SetInventory();
+        }
         public void EndMatch()         // Finishes the match
         {
             MatchInProgress = false;

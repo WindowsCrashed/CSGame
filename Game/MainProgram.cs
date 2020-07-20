@@ -14,12 +14,13 @@ namespace Game
 
             Player p = new Player();
             BlackKnight bk = new BlackKnight();
-            Screen s = new Screen(bk, p);
+            Screen s = new Screen(p, bk);
             CombatException e = new CombatException(s);
             Match m = new Match(s);
             PlayerTurn pt = new PlayerTurn(m, s, p, bk, e);
-            EnemyTurn et = new EnemyTurn(m, s, bk, p);
+            EnemyTurn et = new EnemyTurn(m, s, p, bk);
 
+            m.SetUpFight(p, bk);   // Used for solving issue with Screen (MAY HAVE MORE USE LATER)
             
             // ------------ FIRST CHOICE --------------
 

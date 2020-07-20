@@ -1,19 +1,20 @@
 ﻿using System;
 using System.IO;
 using Game.Characters;
+using Game.Characters.Inventory;
 using Game.Miscellaneous;
 
 namespace Game
 {
-    class Screen      // Class containing screen related functions
+    class Screen      // Class containing screen related functions (EVENTUALLY MAKE AN INTERNAL SCREEN FUNCTION)
     {
         private Directories _directories = new Directories();
         private Character _opponent;
         private Player _player;
 
-        public Screen(Character opponent, Player player)
+        public Screen(Player player, Character enemy)
         {
-            _opponent = opponent;
+            _opponent = enemy;
             _player = player;
         }
 
@@ -73,15 +74,6 @@ namespace Game
                 Console.WriteLine(e.Message);
             }
         }
-        public void Welcome()       // Just for testing
-        {
-            DottedLine();
-
-            CenterText("WELCOME TO THE FIRST GAME PROJECT!!!\n\n");
-            CenterText("GOOD LUCK, WINDOWSCRASHED!!!(you'll need it...)\n\n");
-
-            DottedLine();
-        }
         public void Encounter()     // Prints the encounter message and decisions 
         {
             DottedLine();
@@ -120,7 +112,7 @@ namespace Game
             DottedLine();
             CenterText("Which attack are you going to use?\n\n");
             DottedLine();
-            CenterText($"[1] {_player.MoveSet[0].Name}    [2] {_player.MoveSet[1].Name}\n");
+            CenterText($"[1] {_player.MoveSet[0].Name}    [2] {_player.MoveSet[1].Name}     [0] RETURN\n");
             CenterText($"[3] {_player.MoveSet[2].Name}    [4] {_player.MoveSet[3].Name}\n\n");
         }
         public void EnemyTurn()   // Prints the Enemy Turn UI
@@ -167,6 +159,32 @@ namespace Game
             HealthBar();
             DottedLine();
             CenterText("ATTACK BLOCKED!!!\n\n");
+            DottedLine();
+        }
+        public void PlayerInventory(CharInventory inventory)     // Prints Inventory choice UI
+        {
+            Idle();
+            HealthBar();
+            DottedLine();
+            CenterText("Which item are you going to use?\n\n");
+            DottedLine();
+            CenterText($"[1] {inventory.CheckItemSlot(0)}    [2] {inventory.CheckItemSlot(1)}     [0] RETURN\n");
+            CenterText($"[3] {inventory.CheckItemSlot(2)}    [4] {inventory.CheckItemSlot(3)}\n\n");
+        }
+        public void UseItem(CharInventory inventory, int pos)   // Prints Used item message
+        {
+            Idle();
+            HealthBar();
+            DottedLine();
+            CenterText($"{inventory.Owner.Name} have used {inventory.Items[pos].Name}!!!\n\n");
+            DottedLine();
+        }
+        public void HealthPotion(int healingPoints)   // Prints health potion message
+        {
+            Idle();
+            HealthBar();
+            DottedLine();
+            CenterText($"{healingPoints} HEALTH POINTS RESTORED!!!\n\n");
             DottedLine();
         }
         public void HealthBar()   // Prints the health bars of player and opponent

@@ -28,7 +28,7 @@ namespace Game.GameLogic
             {
                 _player.LowerShield();   // Lowers player shield at the beginning of the turn
 
-                int choice = 0;
+                int choice = 0;   // Anything other than 1, 2, 3, 4
 
                 while (choice != 1 && choice != 2 && choice != 3 && choice != 4)   // Locks the player until he/she chooses a valid option
                 {
@@ -70,9 +70,9 @@ namespace Game.GameLogic
         }
         public void Attack()        // Function to manage attacks
         {
-            int choice = 0;
+            int choice = 10;     // Anything other than 1, 2, 3, 4 and 0
 
-            while (choice != 1 && choice != 2 && choice != 3 && choice != 4)      // Locks the player until he/she chooses a valid option
+            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 0)      // Locks the player until he/she chooses a valid option
             {
                 Console.Clear();
 
@@ -95,6 +95,9 @@ namespace Game.GameLogic
                             break;
                         case 4:
                             MakeAttack(3);
+                            break;
+                        case 0:    // Returns to main menu
+                            Turn();
                             break;
                         default:
                             _exception.InvalidChoice();
@@ -131,7 +134,65 @@ namespace Game.GameLogic
             _screen.PlayerDefence();
             Thread.Sleep(3000);
         }   
-        public void Inventory() { }  // Empty for now
+        public void Inventory()   // Manages inventory choice
+        {
+            int choice = 10;    // Anything other than 1, 2, 3, 4 and 0
+            bool validItem = true;   // Just for initialization
+
+            while (choice != 0)
+            {
+                Console.Clear();
+
+                _screen.PlayerInventory(_player.Inventory);
+
+                try
+                {
+                    choice = int.Parse(Console.ReadLine());
+
+                    if (choice != 0) // Position is 1 less then choice number (0 brings bugs)
+                    {
+                        validItem = _player.Inventory.ValidateSlot(choice - 1);
+                    }
+
+                    switch (choice)
+                    {
+                        case 1:
+                            UseItem(0);
+                            break;
+                        case 2:
+                            UseItem(1);
+                            break;
+                        case 3:
+                            UseItem(2);
+                            break;
+                        case 4:
+                            UseItem(3);
+                            break;
+                        case 0:         // Returns to main menu
+                            Turn(); 
+                            break;
+                        default:
+                            _exception.InvalidChoice();
+                            break;
+                    }
+
+                    
+                    if (validItem)     // Locks the player until he/she chooses a valid option
+                    {
+                        break;
+                    }
+                }
+                catch
+                {
+                    _exception.InvalidChoice();
+                }
+            }
+        }
+        public void UseItem(int pos)   // Uses item selected in inventory
+        {
+            Console.Clear();
+            _player.Inventory.UseItem(pos);
+        }
         public void Flee()   // Function to end game
         {
             Console.Clear();

@@ -8,6 +8,7 @@ namespace Game.Characters
         {
             Name = "Black Knight";
             Hp = 10;
+            MaxHp = 10;
             CreateMoveSet();
         }
 
