@@ -76,7 +76,7 @@ namespace Game.GameLogic
             {
                 Console.Clear();
 
-                _screen.PlayerAttack();
+                _screen.PlayerAttackMenu();
                 
                 try
                 {

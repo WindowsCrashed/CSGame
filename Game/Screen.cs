@@ -45,7 +45,40 @@ namespace Game
                 }
             }
         }
+        public void PrintSprite(string spriteName)  // Prints any sprite
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(_directories.GetSpritePath(spriteName));
 
+                foreach (string line in lines)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("ERROR 404");
+                Console.WriteLine(e.Message);
+            }
+        }
+        public void DefencePoseLogic(string alternativeSprite)   // Prints different defence sprites or standard ones according to the given conditions
+        {
+            if (_player.ShieldUp && !_opponent.ShieldUp)
+            {
+                PrintSprite("DefencePosePlayer");
+            } else if (!_player.ShieldUp && _opponent.ShieldUp)
+            {
+                PrintSprite("DefencePoseEnemy");
+            }
+            else if (_player.ShieldUp && _opponent.ShieldUp)
+            {
+                PrintSprite("DefencePoseBoth");
+            } else
+            {
+                PrintSprite(alternativeSprite);
+            }
+        }
 
         // ---------- PRINTING FUNCTIONS -------------
 
@@ -57,7 +90,7 @@ namespace Game
             }
             Console.WriteLine("\n");
         }
-        public void Idle()        // Prints the standard position of the characters
+        public void Idle()        // (LEAVE HERE WHILE SPRITES ARE WORK IN PROGRESS) Prints the standard position of the characters
         {
             try
             {
@@ -74,25 +107,9 @@ namespace Game
                 Console.WriteLine(e.Message);
             }
         }
-        public void EncounterPose() // Prints the enemy standing in player's path
-        {
-            try
-            {
-                string[] lines = File.ReadAllLines(_directories.GetSpritePath("Encounter"));
-
-                foreach (string line in lines)
-                {
-                    Console.WriteLine(line);
-                }
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("ERROR 404");
-                Console.WriteLine(e.Message);
-            }
-        }
         public void Encounter()     // Prints the encounter message and decisions 
         {
+            PrintSprite("Encounter");
             DottedLine();
             CenterText($"A {_opponent.Name.ToUpper()} STEPS INTO YOUR PATH!!!\n\n");
             DottedLine();
@@ -114,7 +131,7 @@ namespace Game
         }
         public void PlayerTurn()     // Prints the main UI
         {
-            Idle();
+            DefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText("What is going to be your next move?\n\n");
@@ -122,9 +139,9 @@ namespace Game
             CenterText("[1] ATTACK    [2] DEFEND\n");
             CenterText("[3] INVENTORY    [4] FLEE\n\n");
         }
-        public void PlayerAttack()     // Prints the Attack Choice UI
+        public void PlayerAttackMenu()     // Prints the Attack Choice UI
         {
-            Idle();
+            DefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText("Which attack are you going to use?\n\n");
@@ -132,9 +149,10 @@ namespace Game
             CenterText($"[1] {_player.MoveSet[0].Name}    [2] {_player.MoveSet[1].Name}     [0] RETURN\n");
             CenterText($"[3] {_player.MoveSet[2].Name}    [4] {_player.MoveSet[3].Name}\n\n");
         }
+        public void PlayerAttack() { } // EMPTY FOR NOW
         public void EnemyTurn()   // Prints the Enemy Turn UI
         {
-            Idle();
+            DefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText($"The {_opponent.Name} is preparing to move...\n\n");
@@ -142,7 +160,7 @@ namespace Game
         }
         public void EnemyAttack(int pos)   // Prints the Enemy Attack UI
         {
-            Idle();
+            DefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText($"{_opponent.MoveSet[pos].Name.ToUpper()} INCOMING!!!\n\n");
@@ -156,7 +174,7 @@ namespace Game
         }
         public void PlayerDefence()     // Prints Player Shield Status
         {
-            Idle();
+            DefencePoseLogic(null);  // No alternative
             HealthBar();
             DottedLine();
             CenterText("Shield raised!!!\n\n");
@@ -164,7 +182,7 @@ namespace Game
         }
         public void EnemyDefence()     // Prints Enemy Shield Status
         {
-            Idle();
+            DefencePoseLogic(null);  // No alternative
             HealthBar();
             DottedLine();
             CenterText($"The {_opponent.Name} raised his shield!!!\n\n");
@@ -172,7 +190,7 @@ namespace Game
         }
         public void BlockAttack()    // Prints block message
         {
-            Idle();
+            DefencePoseLogic(null);  // No alternative
             HealthBar();
             DottedLine();
             CenterText("ATTACK BLOCKED!!!\n\n");
@@ -180,7 +198,7 @@ namespace Game
         }
         public void PlayerInventory(CharInventory inventory)     // Prints Inventory choice UI
         {
-            Idle();
+            DefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText("Which item are you going to use?\n\n");
@@ -190,7 +208,7 @@ namespace Game
         }
         public void UseItem(CharInventory inventory, int pos)   // Prints Used item message
         {
-            Idle();
+            DefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText($"{inventory.Owner.Name} have used {inventory.Items[pos].Name}!!!\n\n");
@@ -198,7 +216,7 @@ namespace Game
         }
         public void HealthPotion(int healingPoints)   // Prints health potion message
         {
-            Idle();
+            DefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText($"{healingPoints} HEALTH POINTS RESTORED!!!\n\n");
