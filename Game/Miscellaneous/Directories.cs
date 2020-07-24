@@ -10,7 +10,7 @@ namespace Game.Miscellaneous
         {
             return Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
         }
-        public string GetSpritePath(string name)     // Gets the path of a specific sprite
+        public string GetSpritePath(string name)     // Gets the path of a specific sprite in main folder
         {
             return @$"{GetSolutionPath()}\Sprites\{name}.txt";
         }

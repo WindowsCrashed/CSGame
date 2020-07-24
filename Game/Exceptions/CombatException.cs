@@ -16,12 +16,9 @@ namespace Game.Exceptions
         {
             Console.Clear();
 
-            _screen.Idle();
+            _screen.IdlePose();
             _screen.HealthBar();
-            _screen.DottedLine();
-            _screen.CenterText("INVALID CHOICE\n");
-            _screen.CenterText("Try again\n\n");
-            _screen.DottedLine();
+            _screen.MessageDouble("INVALID CHOICE", "Try again");
 
             Thread.Sleep(2000);
         }
@@ -29,11 +26,8 @@ namespace Game.Exceptions
         {
             Console.Clear();
 
-            _screen.Idle();
-            _screen.HealthBar();
-            _screen.DottedLine();
-            _screen.CenterText($"NO ITEM IN THIS SLOT\n\n");
-            _screen.DottedLine();
+            _screen.IdlePose();
+            _screen.CombatUI($"NO ITEM IN THIS SLOT");
 
             Thread.Sleep(2000);
         }

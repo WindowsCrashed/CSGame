@@ -14,10 +14,10 @@ namespace Game.GameLogic
             MatchInProgress = true;
         }
 
-        public void SetUpFight(Player player, Character opponent)     // Used for solving problems related to Screen
+        public void SetUpFight(Player player, Character opponent)     // Used for setting up Screen class inside characaters for animations
         {  
-            player.SetOpponent(opponent);   // Not useful for now
-            opponent.SetOpponent(player);   // Not useful for now
+            player.SetOpponent(opponent);  
+            opponent.SetOpponent(player);
             player.SetScreen(_screen);
             opponent.SetScreen(_screen);
             player.SetInventory();

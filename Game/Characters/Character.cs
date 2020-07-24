@@ -15,7 +15,7 @@ namespace Game.Characters
         public bool ShieldUp { get; private set; } = false;
         public List<Attack> MoveSet { get; private set; } = new List<Attack>();
 
-        public void SetOpponent(Character opponent)    // Previously used for solving an issue with Screen (MAY BE USEFUL LATER)
+        public void SetOpponent(Character opponent)    // Identifies this character's opponent
         {
             Opponent = opponent;
         }

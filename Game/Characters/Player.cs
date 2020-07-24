@@ -15,10 +15,10 @@ namespace Game.Characters
 
         public void CreateMoveSet()     // Just for testing
         {
-            MoveSet.Add(new Attack("Downward Strike", 3));
-            MoveSet.Add(new Attack("Upward Strike", 3));
+            MoveSet.Add(new Attack("Downward Strike", 3, Animation.Downward));
+            MoveSet.Add(new Attack("Upward Strike", 3, Animation.Upward));
             MoveSet.Add(new Attack("Thrust", 5, Animation.Thrust));
-            MoveSet.Add(new Attack("PRAISE THE SUN", 9999));
+            MoveSet.Add(new Attack("PRAISE THE SUN", 9999, Animation.Special));
         }
     }
 }

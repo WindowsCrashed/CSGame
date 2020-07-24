@@ -91,7 +91,7 @@ namespace Game.GameLogic
             _enemy.RaiseShield();
 
             Console.Clear();
-            _screen.EnemyDefence();
+            _screen.Defence(_enemy);
             Thread.Sleep(3000);
         }
     }

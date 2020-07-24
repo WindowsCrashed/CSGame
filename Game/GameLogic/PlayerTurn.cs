@@ -136,7 +136,7 @@ namespace Game.GameLogic
             _player.RaiseShield();
 
             Console.Clear();
-            _screen.PlayerDefence();
+            _screen.Defence(_player);
             Thread.Sleep(3000);
         }   
         public void Inventory()   // Manages inventory choice

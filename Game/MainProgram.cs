@@ -20,7 +20,7 @@ namespace Game
             PlayerTurn pt = new PlayerTurn(m, s, p, bk, e);
             EnemyTurn et = new EnemyTurn(m, s, p, bk);
 
-            m.SetUpFight(p, bk);   // Used for solving issue with Screen (MAY HAVE MORE USE LATER)
+            m.SetUpFight(p, bk);   // Used for setting up opponents and Screen class for the combat
             
             // ------------ FIRST CHOICE --------------
 
