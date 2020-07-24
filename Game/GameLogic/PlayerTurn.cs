@@ -114,14 +114,19 @@ namespace Game.GameLogic
         {
             Console.Clear();
 
+            _screen.PrepareAttack(_player, pos);
+            Thread.Sleep(3000);
+
+            Console.Clear();
+
             if (_enemy.ShieldUp)        // Only deals damage if enemy's shield is lowered
             {
-                _screen.BlockAttack();
+                _screen.BlockAttack(_enemy);
                 _enemy.LowerShield();
             } else
             {
                 _enemy.ReduceHP(_player, pos);
-                _screen.Damage(_player, pos);
+                _screen.MakeAttack(_player, pos);
             }
             
             Thread.Sleep(3000);

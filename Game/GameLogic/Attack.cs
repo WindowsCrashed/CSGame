@@ -8,11 +8,16 @@ namespace Game.GameLogic
         public int Damage { get; private set; }
         public Animation Animation { get; private set; }
 
-        public Attack(string name, int damage /*Animation animation*/)
+        public Attack(string name, int damage)
         {
             Name = name;
             Damage = damage;
-            //Animation = animation;     // Temporarily disabled
+        }
+        public Attack(string name, int damage, Animation animation)
+        {
+            Name = name;
+            Damage = damage;
+            Animation = animation;
         }
     }
 }

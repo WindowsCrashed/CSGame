@@ -1,4 +1,5 @@
 ﻿using Game.GameLogic;
+using Game.GameLogic.Enums;
 
 namespace Game.Characters
 {
@@ -16,7 +17,7 @@ namespace Game.Characters
         {
             MoveSet.Add(new Attack("Downward Strike", 3));
             MoveSet.Add(new Attack("Upward Strike", 3));
-            MoveSet.Add(new Attack("Thrust", 5));
+            MoveSet.Add(new Attack("Thrust", 5, Animation.Thrust));
             MoveSet.Add(new Attack("PRAISE THE SUN", 9999));
         }
     }

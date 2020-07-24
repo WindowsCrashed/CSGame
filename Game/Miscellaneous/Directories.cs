@@ -14,5 +14,13 @@ namespace Game.Miscellaneous
         {
             return @$"{GetSolutionPath()}\Sprites\{name}.txt";
         }
+        public string GetAttackSpritePath(string type, string user, string sprite)     // Gets the path of an attack sprite
+        {
+            return @$"{GetSolutionPath()}\Sprites\Combat\Attack\{type}\{user}\{sprite}.txt";
+        }
+        public string GetDefenceSpritePath(string sprite)     // Gets the path of a defence sprite
+        {
+            return @$"{GetSolutionPath()}\Sprites\Combat\Defence\{sprite}.txt";
+        }
     }
 }

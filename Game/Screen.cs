@@ -3,6 +3,7 @@ using System.IO;
 using Game.Characters;
 using Game.Characters.Inventory;
 using Game.Miscellaneous;
+using Game.GameLogic.Enums;
 
 namespace Game
 {
@@ -45,7 +46,7 @@ namespace Game
                 }
             }
         }
-        public void PrintSprite(string spriteName)  // Prints any sprite
+        public void PrintSprite(string spriteName)  // (MAY BECOME USELESS) Prints any sprite in main directory
         {
             try
             {
@@ -62,7 +63,41 @@ namespace Game
                 Console.WriteLine(e.Message);
             }
         }
-        public void DefencePoseLogic(string alternativeSprite)   // Prints different defence sprites or standard ones according to the given conditions
+        public void PrintAttackSprite(Animation animation, Character user, string spriteName)  // Prints attack sprites only
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(_directories.GetAttackSpritePath(animation.ToString(), user.GetType().Name, spriteName));
+
+                foreach (string line in lines)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("ERROR 404");
+                Console.WriteLine(e.Message);
+            }
+        }
+        public void PrintDefenceSprite(string spriteName)  // Prints defence sprites only
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(_directories.GetDefenceSpritePath(spriteName));
+
+                foreach (string line in lines)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("ERROR 404");
+                Console.WriteLine(e.Message);
+            }
+        }
+        public void IdleDefencePoseLogic(string alternativeSprite)   // (WIP) Prints different idle defence sprites according to the given conditions
         {
             if (_player.ShieldUp && !_opponent.ShieldUp)
             {
@@ -79,6 +114,18 @@ namespace Game
                 PrintSprite(alternativeSprite);
             }
         }
+        public void PreparePoseLogic(Character user, int pos)   // Prints different prepare sprites according to the given conditions
+        {
+            if (user.Opponent.ShieldUp)
+            {
+                PrintAttackSprite(user.MoveSet[pos].Animation, user, "PrepareES"); // ES == Enemy Shield
+            }
+            else
+            {
+                PrintAttackSprite(user.MoveSet[pos].Animation, user, "Prepare");
+            }
+        }
+
 
         // ---------- PRINTING FUNCTIONS -------------
 
@@ -131,7 +178,7 @@ namespace Game
         }
         public void PlayerTurn()     // Prints the main UI
         {
-            DefencePoseLogic("Idle");
+            IdleDefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText("What is going to be your next move?\n\n");
@@ -141,7 +188,7 @@ namespace Game
         }
         public void PlayerAttackMenu()     // Prints the Attack Choice UI
         {
-            DefencePoseLogic("Idle");
+            IdleDefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText("Which attack are you going to use?\n\n");
@@ -149,10 +196,23 @@ namespace Game
             CenterText($"[1] {_player.MoveSet[0].Name}    [2] {_player.MoveSet[1].Name}     [0] RETURN\n");
             CenterText($"[3] {_player.MoveSet[2].Name}    [4] {_player.MoveSet[3].Name}\n\n");
         }
-        public void PlayerAttack() { } // EMPTY FOR NOW
+        public void PrepareAttack(Character user, int pos)  // Prints attack preparation UI
+        {
+            PreparePoseLogic(user, pos);
+            HealthBar();
+            DottedLine();
+            CenterText($"{user.MoveSet[pos].Name.ToUpper()} INCOMING!!!\n\n");
+            DottedLine();
+        }
+        public void MakeAttack(Character user, int pos)    // Prints damage output UI
+        {
+            PrintAttackSprite(user.MoveSet[pos].Animation, user, "Strike");
+            HealthBar();
+            Damage(user, pos);
+        }
         public void EnemyTurn()   // Prints the Enemy Turn UI
         {
-            DefencePoseLogic("Idle");
+            IdleDefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText($"The {_opponent.Name} is preparing to move...\n\n");
@@ -160,7 +220,7 @@ namespace Game
         }
         public void EnemyAttack(int pos)   // Prints the Enemy Attack UI
         {
-            DefencePoseLogic("Idle");
+            IdleDefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText($"{_opponent.MoveSet[pos].Name.ToUpper()} INCOMING!!!\n\n");
@@ -174,7 +234,7 @@ namespace Game
         }
         public void PlayerDefence()     // Prints Player Shield Status
         {
-            DefencePoseLogic(null);  // No alternative
+            IdleDefencePoseLogic(null);  // No alternative
             HealthBar();
             DottedLine();
             CenterText("Shield raised!!!\n\n");
@@ -182,15 +242,15 @@ namespace Game
         }
         public void EnemyDefence()     // Prints Enemy Shield Status
         {
-            DefencePoseLogic(null);  // No alternative
+            IdleDefencePoseLogic(null);  // No alternative
             HealthBar();
             DottedLine();
             CenterText($"The {_opponent.Name} raised his shield!!!\n\n");
             DottedLine();
         }
-        public void BlockAttack()    // Prints block message
+        public void BlockAttack(Character defender)    // Prints block message
         {
-            DefencePoseLogic(null);  // No alternative
+            PrintDefenceSprite(defender.GetType().Name + "Block");
             HealthBar();
             DottedLine();
             CenterText("ATTACK BLOCKED!!!\n\n");
@@ -198,7 +258,7 @@ namespace Game
         }
         public void PlayerInventory(CharInventory inventory)     // Prints Inventory choice UI
         {
-            DefencePoseLogic("Idle");
+            IdleDefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText("Which item are you going to use?\n\n");
@@ -208,7 +268,7 @@ namespace Game
         }
         public void UseItem(CharInventory inventory, int pos)   // Prints Used item message
         {
-            DefencePoseLogic("Idle");
+            IdleDefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText($"{inventory.Owner.Name} have used {inventory.Items[pos].Name}!!!\n\n");
@@ -216,7 +276,7 @@ namespace Game
         }
         public void HealthPotion(int healingPoints)   // Prints health potion message
         {
-            DefencePoseLogic("Idle");
+            IdleDefencePoseLogic("Idle");
             HealthBar();
             DottedLine();
             CenterText($"{healingPoints} HEALTH POINTS RESTORED!!!\n\n");

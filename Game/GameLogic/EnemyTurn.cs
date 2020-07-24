@@ -76,7 +76,7 @@ namespace Game.GameLogic
             
             if (_player.ShieldUp)      // Only deals damage if player's shield is lowered
             {
-                _screen.BlockAttack();
+                _screen.BlockAttack(_player);
                 _player.LowerShield();
             } else
             {
